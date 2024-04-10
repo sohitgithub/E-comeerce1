@@ -6,14 +6,24 @@ import {
   MDBCardTitle,
   MDBCardText,
   MDBRow,
+  MDBBtn,
   MDBCol
 } from 'mdb-react-ui-kit';
 import Footer from './Footer';
+import {useNavigate} from "react-router-dom"
+
 export default function Home() { 
   const [apidata,setdata]=useState([])
+  const Navigate = useNavigate()
   useEffect(()=>{
    getData()
 },[])
+function getId(pid)
+{
+  const data = {pid:pid,add:"Indore"}
+  Navigate("/item",{state:data})
+}
+
  async function getData()
 {
   //console.log("Hello")
@@ -28,7 +38,7 @@ export default function Home() {
        <MDBRow className='row-cols-1 row-cols-md-3 g-4'>
       {
         apidata.map((item)=>
-        <MDBCol>
+        <MDBCol key={item.id}>
         <MDBCard>
          <center><MDBCardImage
             src={item.image} style={{width:"150px",height:"150px"}}
@@ -44,6 +54,7 @@ export default function Home() {
             <MDBCardText>
               {item.description}
             </MDBCardText>
+            <center><MDBBtn  onClick={()=>getId(item.id)}>view details {item.id}</MDBBtn></center>
           </MDBCardBody>
         </MDBCard>
       </MDBCol>
